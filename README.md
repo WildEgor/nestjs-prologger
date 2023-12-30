@@ -1,0 +1,1 @@
+# github nodepack package boilerplate
