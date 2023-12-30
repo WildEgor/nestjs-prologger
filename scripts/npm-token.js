@@ -3,9 +3,10 @@ const path = require('path');
 const readline = require('readline');
 
 const placeholder = '%TOKEN%';
+const org = '%ORG%';
 const templateLines = [
   'registry=https://registry.npmjs.org/',
-  '@morresoft:registry=https://npm.pkg.github.com/',
+  `@${org}:registry=https://npm.pkg.github.com/`,
   `//npm.pkg.github.com/:_authToken=${placeholder}`,
   '',
 ];
