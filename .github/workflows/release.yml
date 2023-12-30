@@ -36,5 +36,5 @@ jobs:
           yarn release
         env:
           NODE_ENV_TOKEN: ${{ secrets.RELEASE_TOKEN }}
-          ORGANIZATION: ${{ github.repository_owner }}
+          ORG: ${{ github.repository_owner }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
