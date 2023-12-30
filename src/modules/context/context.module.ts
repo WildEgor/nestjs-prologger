@@ -25,14 +25,18 @@ import { ContextRepository } from './context.repository';
       },
     }),
   ],
-  controllers: [],
   providers: [
     {
       provide: ContextConstants.contextRepository,
       useClass: ContextRepository,
     },
   ],
-  exports: [ContextConstants.contextRepository],
+  exports: [
+    {
+      provide: ContextConstants.contextRepository,
+      useClass: ContextRepository,
+    },
+  ],
 })
 export class ContextModule {
 }

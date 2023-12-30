@@ -1252,10 +1252,10 @@
     "@webassemblyjs/ast" "1.11.6"
     "@xtuc/long" "4.2.2"
 
-"@wildegor/nestjs-prologger@1.0.5":
-  version "1.0.5"
-  resolved "https://npm.pkg.github.com/download/@wildegor/nestjs-prologger/1.0.5/fb7ae0179c3202f0a03189232b4eed39098e481d#fb7ae0179c3202f0a03189232b4eed39098e481d"
-  integrity sha512-a9ftmHf1M/HBvnmCwBMvQ6QhcCPFla9y/07B6xX39n+gduJjVDgmvCmekqL6zOI8+lPXVUs6z6FqGAeKNFGe0g==
+"@wildegor/nestjs-prologger@1.0.0":
+  version "1.0.0"
+  resolved "https://npm.pkg.github.com/download/@wildegor/nestjs-prologger/1.0.0/33064c3109cf7522da37a2900744ac0d9ec2a336#33064c3109cf7522da37a2900744ac0d9ec2a336"
+  integrity sha512-SHfaIRru1C3r+dwnCutOSJmNL0hO68XvUXgD0TEHZ/0S7sFiS0Lq+bbMD5eHkmLKcB+4vzL0gm0ViVMRZM9M0A==
 
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
