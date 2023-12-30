@@ -1,6 +1,6 @@
 {
   "name": "@wildegor/nestjs-prologger",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "NestJS ProLogger",
   "author": "Kartashov Egor",
   "private": false,
