@@ -3,14 +3,17 @@ import 'winston-daily-rotate-file';
 import { LoggerConstants } from './logger.constants';
 import { LoggerService } from './logger.service';
 import { ContextModule } from '../context';
-import { WinstonModule } from '../../infrastructure/adapters/winston/winston.module';
 import { ILoggerAsyncOptions, ILoggerConfigFactory } from './logger.interfaces';
-import { ILoggerPort } from '../../infrastructure/interfaces/logger.interfaces';
+import { ILoggerModuleOptions, ILoggerPort } from '../../infrastructure/interfaces/logger.interfaces';
 import { LoggerAdapter } from './logger.adapter';
+import { WinstonConstants } from '../../infrastructure/adapters/winston/winston.constants';
+import { ConsoleTransport, FileTransport, TelegramTransport } from '../../infrastructure/adapters/winston/transports';
+import { WinstonAdapter } from '../../infrastructure/adapters/winston';
+import Transport from 'winston-transport';
 
 @Global()
 @Module({
-  imports: [ContextModule, WinstonModule],
+  imports: [ContextModule],
 })
 export class LoggerModule {
 
@@ -22,6 +25,30 @@ export class LoggerModule {
       },
       inject: [asyncOptions.useExisting],
     };
+
+    const WinstonAdapterProvider: Provider = {
+      provide: LoggerConstants.loggerBase,
+      useClass: WinstonAdapter,
+    };
+
+    const WinstonTransportsProvider: Provider = {
+      provide: WinstonConstants.winstonTransports,
+      useFactory: (opts: ILoggerModuleOptions) => {
+        const transports: Transport[] = [];
+        transports.push(ConsoleTransport.create());
+
+        if (opts.opts.file) {
+          transports.push(FileTransport.create(opts.opts.file));
+        }
+
+        if (opts.opts.telegram) {
+          transports.push(TelegramTransport.create(opts.opts.telegram));
+        }
+
+        return transports;
+      },
+      inject: [LoggerConstants.options],
+    }
 
     const LoggerServiceProvider: Provider = {
       provide: LoggerConstants.logger,
@@ -38,6 +65,8 @@ export class LoggerModule {
       module: LoggerModule,
       imports: asyncOptions.imports,
       providers: [
+        WinstonAdapterProvider,
+        WinstonTransportsProvider,
         LoggerOptionsProvider,
         LoggerServiceProvider,
         LoggerAdapterProvider,

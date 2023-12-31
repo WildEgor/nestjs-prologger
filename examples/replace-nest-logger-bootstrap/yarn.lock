@@ -722,7 +722,7 @@
     path-to-regexp "3.2.0"
     tslib "2.6.2"
 
-"@nestjs/platform-express@10.3.0":
+"@nestjs/platform-express@^10.3.0":
   version "10.3.0"
   resolved "https://registry.yarnpkg.com/@nestjs/platform-express/-/platform-express-10.3.0.tgz#ea69b048ef90b78b1001eb1c6b02d9d798f5f3af"
   integrity sha512-E4hUW48bYv8OHbP9XQg6deefmXb0pDSSuE38SdhA0mJ37zGY7C5EqqBUdlQk4ttfD+OdnbIgJ1zOokT6dd2d7A==
@@ -1252,10 +1252,10 @@
     "@webassemblyjs/ast" "1.11.6"
     "@xtuc/long" "4.2.2"
 
-"@wildegor/nestjs-prologger@1.0.0":
-  version "1.0.0"
-  resolved "https://npm.pkg.github.com/download/@wildegor/nestjs-prologger/1.0.0/33064c3109cf7522da37a2900744ac0d9ec2a336#33064c3109cf7522da37a2900744ac0d9ec2a336"
-  integrity sha512-SHfaIRru1C3r+dwnCutOSJmNL0hO68XvUXgD0TEHZ/0S7sFiS0Lq+bbMD5eHkmLKcB+4vzL0gm0ViVMRZM9M0A==
+"@wildegor/nestjs-prologger@1.0.1":
+  version "1.0.1"
+  resolved "https://npm.pkg.github.com/download/@wildegor/nestjs-prologger/1.0.1/138faf3cc4333a08c3a946f60b8622a72130a74b#138faf3cc4333a08c3a946f60b8622a72130a74b"
+  integrity sha512-5vbxSu5aaehkbkx8ZEWY2bKyV4UmYXsDw/ZpmA5y2Kv45qDtltICmJYoSK9DU8WGFICdzyfLtWYqlPSD751N1w==
 
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"

@@ -1,8 +1,8 @@
 import { ClsModule } from 'nestjs-cls';
-import { Global, Module } from '@nestjs/common';
 import { v4 } from 'uuid';
 import { ContextConstants } from './context.constants';
 import { ContextRepository } from './context.repository';
+import { Global, Module } from "@nestjs/common";
 
 @Global()
 @Module({
