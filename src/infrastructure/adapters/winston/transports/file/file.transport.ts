@@ -1,4 +1,4 @@
-import DailyRotateFile = require('winston-daily-rotate-file');
+import DailyRotateFile from 'winston-daily-rotate-file';
 import { IFileTransportOpts } from '../../../../interfaces/logger.interfaces';
 
 export class FileTransport {
