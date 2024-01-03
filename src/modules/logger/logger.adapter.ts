@@ -1,6 +1,6 @@
 import { ConsoleLogger } from '@nestjs/common';
 import { LoggerService } from '@nestjs/common/services/logger.service';
-import { ILoggerPort, ILogPayload } from '../../infrastructure/interfaces/logger.interfaces';
+import { ILoggerPort, ILogPayload, LogLevel } from '../../infrastructure/interfaces/logger.interfaces';
 
 export class LoggerAdapter
   extends ConsoleLogger
@@ -8,6 +8,10 @@ export class LoggerAdapter
 
   public constructor(private logger: ILoggerPort) {
     super();
+  }
+
+  public setLogLevels(levels: LogLevel[]): void {
+    this.logger.setLogLevels(levels);
   }
 
   public log(message: any, ...optionalParams: any[]): void {
@@ -31,8 +35,9 @@ export class LoggerAdapter
   }
 
   private getLogData(...optionalParams: any[]): ILogPayload {
+    const source = optionalParams[0]?.length ? optionalParams[0] : this.context;
     return {
-      source: optionalParams[0] ? optionalParams[0] : undefined,
+      source,
     };
   }
 

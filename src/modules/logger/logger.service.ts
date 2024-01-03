@@ -34,6 +34,14 @@ export class LoggerService implements ILoggerPort {
     this._contextRepository = contextRepository;
   }
 
+  public log(message: string | Error, data?: ILogPayload | undefined, profile?: string | undefined): void {
+    if (message instanceof Error) {
+      return this._logger.info(message.message, this._extractLogPayload(data), profile);
+    }
+
+    this._logger.info(message, this._extractLogPayload(data), profile);
+  }
+
   public startProfile(id: string): void {
     this._logger.startProfile(id);
   }
@@ -70,13 +78,13 @@ export class LoggerService implements ILoggerPort {
     return this._logger.fatal(message, this._extractLogPayload(data), profile);
   }
 
-  public log(
+  public print(
     level: LogLevel,
     message: string | Error,
     data?: ILogPayload,
     profile?: string,
   ): void {
-    return this._logger.log(level, message, this._extractLogPayload(data), profile);
+    return this._logger.print(level, message, this._extractLogPayload(data), profile);
   }
 
   private _extractLogPayload(data?: ILogPayload): ILogPayload {

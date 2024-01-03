@@ -3,6 +3,10 @@ export interface IFileTransportOpts {
   period: string;
 }
 
+export interface IConsoleTransportOpts {
+  format: 'json' | 'pretty';
+}
+
 export interface ITelegramFormatOptions {
   context: string;
   timestamp: string;
@@ -38,13 +42,16 @@ export interface ITelegramTransportOpts {
   batchingSeparator?: string;
 }
 
+export interface ILoggerMetaOptions {
+  organization?: string;
+  context?: string;
+  app?: string;
+}
+
 export interface ILoggerOptions {
   hideTrace?: boolean;
-  meta?: {
-    organization?: string;
-    context?: string;
-    app?: string;
-  },
+  meta?: ILoggerMetaOptions;
+  console?: IConsoleTransportOpts;
   file?: IFileTransportOpts;
   telegram?: ITelegramTransportOpts;
 }
@@ -117,8 +124,20 @@ export interface ILoggerPort {
    * @param data
    * @param profile
    */
-  log(
+  print(
     level: LogLevel,
+    message: string | Error,
+    data?: ILogPayload,
+    profile?: string,
+  ): void;
+
+  /**
+   * @description Log a message with level `log`
+   * @param message
+   * @param data
+   * @param profile
+   */
+  log(
     message: string | Error,
     data?: ILogPayload,
     profile?: string,

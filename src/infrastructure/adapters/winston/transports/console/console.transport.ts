@@ -1,35 +1,43 @@
 import * as winston from 'winston';
-import { LogColors, LogLevels } from '../../../../interfaces/logger.interfaces';
+import { IConsoleTransportOpts, LogColors, LogLevels } from '../../../../interfaces/logger.interfaces';
 
 export class ConsoleTransport {
 
-  public static create(): winston.transports.ConsoleTransportInstance {
+  public static create(opts?: IConsoleTransportOpts): winston.transports.ConsoleTransportInstance {
+    if (opts?.format && 'json' === opts.format) {
+      return new winston.transports.Console({
+        format: winston.format.json({
+          deterministic: true,
+        }),
+      });
+    }
+
     return new winston.transports.Console({
       format: winston.format.combine(
-        winston.format.printf((log) => {
+        winston.format.printf(log => {
           const color = this._mapLogLevelColor(log.level as LogLevels);
 
-          const prefix = `${log?.data?.label ? `[${log.data.label}]` : ''}`;
+          const prefix = `${log.data?.label ? `[${log.data.label}]` : ''}`;
 
           return `${this._colorize(color, `${prefix}  -`)} ${log.timestamp}    ${
-            log?.data?.correlationId
+            log.data?.correlationId
               ? `(${this._colorize(LogColors.cyan, log.data.correlationId)})`
               : ''
           } ${this._colorize(color, log.level.toUpperCase())} ${
-            log?.data?.source
+            log.data?.source
               ? `${this._colorize(LogColors.cyan, `[${log.data.source}]`)}`
               : ''
           } ${this._colorize(
             color,
             `${log.message} - ${log.data.error ? log.data.error : ''}`,
           )}${
-            typeof log?.data?.durationMs !== 'undefined'
+            typeof log.data?.durationMs !== 'undefined'
               ? this._colorize(color, ` +${log.data.durationMs}ms`)
               : ''
           }${
-            log?.data?.stack ? this._colorize(color, `  - ${log.data.stack}`) : ''
+            log.data?.stack ? this._colorize(color, `  - ${log.data.stack}`) : ''
           }${
-            log?.data?.props
+            log.data?.props
               ? `\n  - Props: ${JSON.stringify(log.data.props, null, 4)}`
               : ''
           }`;
