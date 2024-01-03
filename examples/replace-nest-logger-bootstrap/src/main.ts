@@ -1,18 +1,24 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { LoggerAdapter } from '@wildegor/nestjs-prologger/modules/modules/logger/logger.adapter';
-import { LoggerConstants } from '@wildegor/nestjs-prologger/modules/modules/logger/logger.constants';
+import { LogLevels } from '@wildegor/nestjs-prologger/modules/infrastructure/interfaces/logger.interfaces';
+import { LoggerAdapter } from '../../../src/modules/logger/logger.adapter';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    bufferLogs: true,
+  });
 
-  const logger = app.get<LoggerAdapter>(LoggerConstants.logger);
+  const logger = app.get<LoggerAdapter>(LoggerAdapter);
+  logger.setLogLevels([
+    LogLevels.Debug,
+    LogLevels.Log,
+    LogLevels.Warn,
+    LogLevels.Verbose,
+  ]);
 
   app.useLogger(logger);
 
   logger.error('Error message');
-
-  throw Error('Error message');
 
   await app.listen(3001);
 }

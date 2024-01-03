@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import * as winston from 'winston';
-import { LoggerOptions } from 'winston';
+import { LogEntry, LoggerOptions } from 'winston';
 import { InjectLoggerOpts } from '../../../modules/logger/logger.decorators';
 import {
   ILogPayload,
@@ -51,10 +51,14 @@ export class WinstonAdapter implements ILoggerPort {
     let cont = 0;
 
     // Set all levels
-    if (!levels) {
+    if ('undefined' === typeof levels) {
       for (const level of Object.values(LogLevels)) {
         if (level === LogLevels.Silent) {
           continue;
+        }
+
+        if (level === LogLevels.Log) {
+          this._logLevels.add(LogLevels.Info);
         }
 
         this._logLevels.add(level);
@@ -66,6 +70,10 @@ export class WinstonAdapter implements ILoggerPort {
     }
 
     for (const level of levels) {
+      if (level === LogLevels.Log) {
+        this._logLevels.add(LogLevels.Info);
+      }
+
       this._logLevels.add(level);
       this._defaultLevels[level] = cont;
       cont += 1;
@@ -79,34 +87,42 @@ export class WinstonAdapter implements ILoggerPort {
   }
 
   public verbose(message: string | Error, data?: ILogPayload | undefined, profile?: string | undefined): void {
-    this.log(LogLevels.Verbose, message, data, profile);
+    return this.print(LogLevels.Verbose, message, data, profile);
   }
 
   public debug(message: string, data?: ILogPayload, profile?: string): void {
-    this.log(LogLevels.Debug, message, data, profile);
+    return this.print(LogLevels.Debug, message, data, profile);
   }
 
   public info(message: string, data?: ILogPayload, profile?: string): void {
-    this.log(LogLevels.Info, message, data, profile);
+    return this.print(LogLevels.Info, message, data, profile);
   }
 
   public warn(message: string | Error, data?: ILogPayload, profile?: string): void {
-    this.log(LogLevels.Warn, message, data, profile);
+    return this.print(LogLevels.Warn, message, data, profile);
   }
 
   public error(message: string | Error, data?: ILogPayload, profile?: string): void {
-    this.log(LogLevels.Error, message, data, profile);
+    return this.print(LogLevels.Error, message, data, profile);
   }
 
   public emergency(message: string | Error, data?: ILogPayload, profile?: string): void {
-    this.log(LogLevels.Emergency, message, data, profile);
+    return this.print(LogLevels.Emergency, message, data, profile);
   }
 
   public fatal(message: string | Error, data?: ILogPayload, profile?: string): void {
-    this.log(LogLevels.Emergency, message, data, profile);
+    return this.print(LogLevels.Emergency, message, data, profile);
   }
 
   public log(
+    message: string | Error,
+    data?: ILogPayload,
+    profile?: string,
+  ): void {
+    return this.print(LogLevels.Info, message, data, profile);
+  }
+
+  public print(
     level: LogLevels,
     message: string | Error,
     data?: ILogPayload,
@@ -116,7 +132,7 @@ export class WinstonAdapter implements ILoggerPort {
       return;
     }
 
-    const logData = {
+    const logData: LogEntry = {
       level,
       message: message instanceof Error ? message.message : message,
       error: message instanceof Error ? message : undefined,
