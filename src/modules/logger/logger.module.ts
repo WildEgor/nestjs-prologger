@@ -58,7 +58,7 @@ export class LoggerModule {
     const LoggerAdapterProvider: Provider = {
       provide: LoggerAdapter,
       useFactory: (logger: ILoggerPort) => new LoggerAdapter(logger),
-      inject: [LoggerConstants.logger],
+      inject: [LoggerConstants.loggerBase],
     };
 
     return {
