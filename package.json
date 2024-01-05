@@ -35,11 +35,17 @@
     "release": "semantic-release",
     "prepare": "husky install && yarn build"
   },
+  "peerDependencies": {
+    "@nestjs/common": "> 7.0.0 < 11",
+    "@nestjs/core": "> 7.0.0 < 11",
+    "reflect-metadata": "*",
+    "rxjs": ">= 7"
+  },
   "devDependencies": {
-    "@nestjs/cli": "10.2.1",
-    "@nestjs/common": "10.2.10",
-    "@nestjs/config": "3.1.1",
-    "@nestjs/core": "10.2.10",
+    "@nestjs/cli": "^10.0.2",
+    "@nestjs/common": "^10.0.0",
+    "@nestjs/config": "^3.1.1",
+    "@nestjs/core": "^10.0.0",
     "@semantic-release/git": "10.0.1",
     "@swc/cli": "0.1.63",
     "@swc/core": "1.3.100",
@@ -60,7 +66,6 @@
     "husky": "8.0.3",
     "nestjs-cls": "3.6.0",
     "prettier": "2.3.2",
-    "rabbitmq-client": "4.4.0",
     "reflect-metadata": "0.1.13",
     "rimraf": "3.0.2",
     "rxjs": "^7.8.1",

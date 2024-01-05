@@ -9,6 +9,7 @@ import { LoggerConfig } from './infrastructure/configs/logger.config';
   imports: [
     ConfigModule,
     LoggerModule.forRootAsync({
+      imports: [ConfigModule],
       useExisting: LoggerConfig,
     }),
   ],
