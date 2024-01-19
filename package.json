@@ -39,7 +39,9 @@
     "@nestjs/common": "> 7.0.0 < 11",
     "@nestjs/core": "> 7.0.0 < 11",
     "reflect-metadata": "*",
-    "rxjs": ">= 7"
+    "rxjs": ">= 7",
+    "nestjs-cls": "3.5.0",
+    "winston": "3.11.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.2",
