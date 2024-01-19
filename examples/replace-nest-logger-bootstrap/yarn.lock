@@ -722,7 +722,7 @@
     path-to-regexp "3.2.0"
     tslib "2.6.2"
 
-"@nestjs/platform-express@^10.0.5":
+"@nestjs/platform-express@^10.3.0":
   version "10.3.0"
   resolved "https://registry.yarnpkg.com/@nestjs/platform-express/-/platform-express-10.3.0.tgz#ea69b048ef90b78b1001eb1c6b02d9d798f5f3af"
   integrity sha512-E4hUW48bYv8OHbP9XQg6deefmXb0pDSSuE38SdhA0mJ37zGY7C5EqqBUdlQk4ttfD+OdnbIgJ1zOokT6dd2d7A==
@@ -1252,10 +1252,10 @@
     "@webassemblyjs/ast" "1.11.6"
     "@xtuc/long" "4.2.2"
 
-"@wildegor/nestjs-prologger@1.0.5":
-  version "1.0.5"
-  resolved "https://npm.pkg.github.com/download/@wildegor/nestjs-prologger/1.0.5/203614572f4d3f34937adf19cc92a9200f1e92f8#203614572f4d3f34937adf19cc92a9200f1e92f8"
-  integrity sha512-OzofSfsSEnMkduImPa+hgRw4bxa6sUKDXngEtqIOHVSErcAxQwdrl5uVu/RTx0p541Xw5jhrPEBfe6oyyc2Q9Q==
+"@wildegor/nestjs-prologger@1.0.7":
+  version "1.0.7"
+  resolved "https://npm.pkg.github.com/download/@wildegor/nestjs-prologger/1.0.7/4bb757a9c5714a9a1ac9520d4fc3c37565c20323#4bb757a9c5714a9a1ac9520d4fc3c37565c20323"
+  integrity sha512-qNLGZLF9a7vcCQeYvX5/W+lkkj5//UwISXhDMlGVWGLm2NPpenxiqZaZZORD4TpWAIA85qVUmhjx/qy/VF780w==
 
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
@@ -3741,6 +3741,11 @@ neo-async@^2.6.2:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.2.tgz#b4aafb93e3aeb2d8174ca53cf163ab7d7308305f"
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
+
+nestjs-cls@^3.6.0:
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/nestjs-cls/-/nestjs-cls-3.6.0.tgz#78d8e46b620ddcae2aa97fd4448fc6f641a9849d"
+  integrity sha512-hAu8Pyhl0okB7LgQFoxP8kq26izBh0UCnDLfE2Ze9eJAz2A8XdFkBNIVca868T1Yf8bsLzvfsKPTxCQZ0hTMDQ==
 
 node-abort-controller@^3.0.1:
   version "3.1.1"
