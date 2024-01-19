@@ -3,8 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { IContextRepository } from './context.interfaces';
 
 @Injectable()
-export class ContextRepository
-implements IContextRepository {
+export class ContextRepository implements IContextRepository {
 
   constructor(private readonly cls: ClsService) {
   }

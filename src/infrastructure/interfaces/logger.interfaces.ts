@@ -1,45 +1,5 @@
-export interface IFileTransportOpts {
-  path: string;
-  period: string;
-}
-
 export interface IConsoleTransportOpts {
   format: 'json' | 'pretty';
-}
-
-export interface ITelegramFormatOptions {
-  context: string;
-  timestamp: string;
-  level: LogLevels;
-  message: string;
-  metadata: ILogPayload;
-}
-
-export type FormatOptionsFn = (params: ITelegramFormatOptions, info: any) => string;
-
-export interface ITelegramTransportOpts {
-  /** The Telegram bot authentication token. */
-  token: string;
-  /** The Telegram chat_id you want to send to. */
-  chatId: string;
-  /** The Telegram mode for parsing entities in the message text. */
-  parseMode?: 'MarkdownV2' | 'HTML'; // TODO: add enum
-  /** Levels of messages that this transport should log. (default none) */
-  levels?: LogLevels[];
-  /** Whether to suppress output. (default false) */
-  silent?: boolean;
-  /** Sends the message silently. (default false) */
-  disableNotification?: boolean;
-  /** Format output message. (default "[{level}] [message]") */
-  template?: string;
-  /** Format output message by own method. */
-  formatMessage?: FormatOptionsFn;
-  /** Handle uncaught exceptions. (default true) */
-  handleExceptions?: boolean;
-  /** Time in ms within which to batch messages together. (default = 0) (0 = disabled) */
-  batchingDelay?: number;
-  /** String with which to join batched messages with (default "\n\n") */
-  batchingSeparator?: string;
 }
 
 export interface ILoggerMetaOptions {
@@ -52,8 +12,6 @@ export interface ILoggerOptions {
   hideTrace?: boolean;
   meta?: ILoggerMetaOptions;
   console?: IConsoleTransportOpts;
-  file?: IFileTransportOpts;
-  telegram?: ITelegramTransportOpts;
 }
 
 export interface ILoggerModuleOptions {
@@ -94,13 +52,6 @@ export interface ILogPayload {
   source?: string;
   error?: Error;
   props?: NodeJS.Dict<unknown>;
-}
-
-export interface ILog {
-  level: LogLevels;
-  timestamp?: string;
-  message: string;
-  data?: ILogPayload;
 }
 
 export interface ILoggerPort {

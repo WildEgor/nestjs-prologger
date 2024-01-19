@@ -1,9 +1,13 @@
 import * as winston from 'winston';
 import { IConsoleTransportOpts, LogColors, LogLevels } from '../../../../interfaces/logger.interfaces';
 
+/**
+ * @description Console transport used stdout
+ */
 export class ConsoleTransport {
 
   public static create(opts?: IConsoleTransportOpts): winston.transports.ConsoleTransportInstance {
+    // Specify only json format
     if (opts?.format && 'json' === opts.format) {
       return new winston.transports.Console({
         format: winston.format.json({
@@ -12,6 +16,7 @@ export class ConsoleTransport {
       });
     }
 
+    // Specify NestLike format
     return new winston.transports.Console({
       format: winston.format.combine(
         winston.format.printf(log => {
@@ -19,7 +24,7 @@ export class ConsoleTransport {
 
           const prefix = `${log.data?.label ? `[${log.data.label}]` : ''}`;
 
-          return `${this._colorize(color, `${prefix}  -`)} ${log.timestamp}    ${
+          return `${this._colorize(color, `${prefix}  - ${String(process.pid).padEnd(6)}`)} ${log.timestamp}    ${
             log.data?.correlationId
               ? `(${this._colorize(LogColors.cyan, log.data.correlationId)})`
               : ''

@@ -1,7 +1,8 @@
-import { ConsoleLogger } from '@nestjs/common';
+import { ConsoleLogger, Injectable } from '@nestjs/common';
 import { LoggerService } from '@nestjs/common/services/logger.service';
 import { ILoggerPort, ILogPayload, LogLevel } from '../../infrastructure/interfaces/logger.interfaces';
 
+@Injectable()
 export class LoggerAdapter
   extends ConsoleLogger
   implements LoggerService {
