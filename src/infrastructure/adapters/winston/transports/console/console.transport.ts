@@ -11,7 +11,7 @@ export class ConsoleTransport {
     if (opts?.format && 'json' === opts.format) {
       return new winston.transports.Console({
         format: winston.format.json({
-          deterministic: true,
+          // deterministic: true,
         }),
       });
     }

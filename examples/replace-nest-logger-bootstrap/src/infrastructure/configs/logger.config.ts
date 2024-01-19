@@ -12,6 +12,9 @@ export class LoggerConfig implements ILoggerConfigFactory {
   constructor() {
     this._opts = {
       hideTrace: false,
+      console: {
+        format: 'json',
+      },
       meta: {
         organization: 'NestJS ProLogger',
         context: 'service',
