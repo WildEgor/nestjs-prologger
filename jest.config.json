@@ -1,17 +1,13 @@
 {
-  "moduleFileExtensions": [
-    "js",
-    "json",
-    "ts"
+  "maxWorkers": 1,
+  "moduleFileExtensions": ["ts", "js"],
+  "testMatch": [
+    // unit tests
+    "<rootDir>/src/**/*.spec.ts",
+    // e2e tests
+    "<rootDir>/tests/**/*.spec.ts"
   ],
-  "rootDir": "tests",
-  "testRegex": ".*\\.spec\\.ts$",
   "transform": {
-    "^.+\\.(t|j)s$": "ts-jest"
-  },
-  "collectCoverageFrom": [
-    "**/*.ts"
-  ],
-  "coverageDirectory": "../coverage",
-  "testEnvironment": "node"
+    "^.+\\.ts$": "ts-jest"
+  }
 }

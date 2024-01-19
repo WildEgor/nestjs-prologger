@@ -33,11 +33,11 @@ export class WinstonAdapter implements ILoggerPort {
   @InjectWinstonTransports()
     transports: winston.transport[],
     @InjectLoggerOpts()
-    configs: ILoggerModuleOptions,
+    opts: ILoggerModuleOptions,
   ) {
     // Create winston logger
     this._logLevels = new Set<LogLevel>();
-    this._logger = winston.createLogger(this._getLoggerFormatOptions(transports, configs));
+    this._logger = winston.createLogger(this._getLoggerFormatOptions(transports, opts));
   }
 
   // Setting log levels for winston

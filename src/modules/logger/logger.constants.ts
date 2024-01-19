@@ -3,5 +3,3 @@ export enum LoggerConstants {
   loggerBase = 'logger_module_logger_base',
   options = 'logger_module_options',
 }
-
-export const correlationIdHeader = 'X-CORRELATION-ID';
