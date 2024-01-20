@@ -5,12 +5,9 @@ import { ContextModule } from '../context';
 import {
   ILoggerAsyncOptions,
   ILoggerConfigFactory,
-  ILoggerTransportsAsyncOptions,
-  ILoggerTransportsConfigFactory,
 } from './logger.interfaces';
 import {
   ILoggerModuleOptions,
-  ILoggerTransportsModuleOptions,
 } from '../../infrastructure/interfaces/logger.interfaces';
 import { LoggerAdapter } from './logger.adapter';
 import { WinstonConstants } from '../../infrastructure/adapters/winston/winston.constants';
@@ -22,42 +19,6 @@ import { WinstonAdapter } from '../../infrastructure/adapters/winston';
   imports: [ContextModule],
 })
 export class LoggerModule {
-
-  public static forTransports(options: ILoggerTransportsModuleOptions): Provider {
-    const WinstonTransportsProvider: Provider = {
-      provide: WinstonConstants.winstonTransports,
-      useFactory: (opts: ILoggerModuleOptions) => {
-        const transports: unknown[] = [
-          ConsoleTransport.create(opts?.opts?.console),
-          ...options.transports,
-        ];
-
-        return transports;
-      },
-      inject: [LoggerConstants.options],
-    }
-
-    return WinstonTransportsProvider;
-  }
-
-  public static forTransportAsync(asyncOptions: ILoggerTransportsAsyncOptions): Provider {
-    const WinstonTransportsProvider: Provider = {
-      provide: WinstonConstants.winstonTransports,
-      useFactory: async (optionsFactory: ILoggerTransportsConfigFactory, opts: ILoggerModuleOptions) => {
-        const transportOpts  = await optionsFactory.createTransportsConfig()
-
-        const transports: unknown[] = [
-          ConsoleTransport.create(opts?.opts?.console),
-          ...transportOpts.transports,
-        ];
-
-        return transports;
-      },
-      inject: [asyncOptions.useExisting, LoggerConstants.options],
-    }
-
-    return WinstonTransportsProvider;
-  }
 
   public static forRoot(options: ILoggerModuleOptions): DynamicModule {
     const LoggerOptionsProvider: Provider = {
@@ -75,6 +36,10 @@ export class LoggerModule {
       useFactory: (opts: ILoggerModuleOptions) => {
         const transports: unknown[] = [];
         transports.push(ConsoleTransport.create(opts?.opts?.console));
+
+        if (opts?.transports) {
+          transports.push(...opts.transports);
+        }
 
         return transports;
       },
@@ -127,6 +92,10 @@ export class LoggerModule {
       useFactory: (opts: ILoggerModuleOptions) => {
         const transports: unknown[] = [];
         transports.push(ConsoleTransport.create(opts?.opts?.console));
+
+        if (opts?.transports) {
+          transports.push(...opts.transports);
+        }
 
         return transports;
       },
