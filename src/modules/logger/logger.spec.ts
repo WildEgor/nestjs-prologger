@@ -15,6 +15,10 @@ describe('Logger Unit Tests', () => {
     const moduleRef = await Test.createTestingModule({
       imports: [
         LoggerModule.forRoot({
+          transports: [new winston.transports.File({
+            // lazy: true,
+            filename: 'app.log'
+          })],
           opts: {
             hideTrace: false,
             meta: {
@@ -28,14 +32,6 @@ describe('Logger Unit Tests', () => {
           }
         })
       ],
-      providers: [
-        LoggerModule.forTransports({
-          transports: [new winston.transports.File({
-            // lazy: true,
-            filename: 'app.log'
-          })],
-        }),
-      ]
     }).compile();
 
     logger = moduleRef.get<LoggerAdapter>(LoggerAdapter);
