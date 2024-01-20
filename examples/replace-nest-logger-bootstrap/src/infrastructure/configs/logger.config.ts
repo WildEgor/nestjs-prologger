@@ -4,6 +4,7 @@ import {
   ILoggerOptions,
 } from '@wildegor/nestjs-prologger/modules/infrastructure/interfaces/logger.interfaces';
 import { ILoggerConfigFactory } from '@wildegor/nestjs-prologger/modules/modules/logger/logger.interfaces';
+import * as winston from 'winston';
 
 @Injectable()
 export class LoggerConfig implements ILoggerConfigFactory {
@@ -27,6 +28,12 @@ export class LoggerConfig implements ILoggerConfigFactory {
     | ILoggerModuleOptions
     | Promise<ILoggerModuleOptions> {
     return {
+      transports: [
+        new winston.transports.File({
+          filename: 'app.log',
+          // level: 'error',
+        }),
+      ],
       opts: this._opts,
     };
   }
