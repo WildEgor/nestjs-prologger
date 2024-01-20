@@ -1,11 +1,12 @@
-import { jest, beforeEach, describe, expect, it } from '@jest/globals';
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { Test } from '@nestjs/testing';
 import { LoggerModule } from './logger.module';
 import { LoggerAdapter } from './logger.adapter';
-import { ILoggerPort } from '../../infrastructure/interfaces/logger.interfaces';
+import { ILoggerPort, LogLevels } from '../../infrastructure/interfaces/logger.interfaces';
 import { LoggerConstants } from './logger.constants';
+import winston from 'winston';
 
-describe('Logger', () => {
+describe('Logger Unit Tests', () => {
   let logger: LoggerAdapter | undefined;
   let adapter: ILoggerPort | undefined;
 
@@ -16,16 +17,29 @@ describe('Logger', () => {
         LoggerModule.forRoot({
           opts: {
             hideTrace: false,
-            meta: {},
+            meta: {
+              organization: 'Example LLC',
+              context: 'example-context',
+              app: 'example-service',
+            },
             console: {
-              format: 'pretty',
+              format: 'json',
             },
           }
         })
       ],
+      providers: [
+        LoggerModule.forTransports({
+          transports: [new winston.transports.File({
+            // lazy: true,
+            filename: 'app.log'
+          })],
+        }),
+      ]
     }).compile();
 
     logger = moduleRef.get<LoggerAdapter>(LoggerAdapter);
+    logger?.setLogLevels([LogLevels.Log, LogLevels.Debug])
     adapter = moduleRef.get<ILoggerPort>(LoggerConstants.loggerBase);
   })
 
@@ -36,12 +50,18 @@ describe('Logger', () => {
 
   it('LoggerAdapter should log', () => {
     // @ts-ignore
-    const logSpy = jest.spyOn(adapter, 'info');
+    const logSpy = jest.spyOn(adapter, 'debug');
 
-    logger?.log('test');
+    logger?.debug("Example Message", {
+      source: 'ExampleService',
+      event_name: "example_executed",
+      props: {
+        user_id: "123"
+      }
+    });
 
     expect(logSpy).toHaveBeenCalled();
-    expect(logSpy.mock.calls[0][0]).toEqual('test');
+    expect(logSpy.mock.calls[0][0]).toEqual('Example Message');
     expect(logger).toBeDefined();
     logSpy.mockRestore();
   });

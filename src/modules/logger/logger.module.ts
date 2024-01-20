@@ -2,8 +2,16 @@ import { DynamicModule, Global, Module, Provider } from '@nestjs/common';
 import { LoggerConstants } from './logger.constants';
 import { LoggerService } from './logger.service';
 import { ContextModule } from '../context';
-import { ILoggerAsyncOptions, ILoggerConfigFactory } from './logger.interfaces';
-import { ILoggerModuleOptions, ILoggerPort } from '../../infrastructure/interfaces/logger.interfaces';
+import {
+  ILoggerAsyncOptions,
+  ILoggerConfigFactory,
+  ILoggerTransportsAsyncOptions,
+  ILoggerTransportsConfigFactory,
+} from './logger.interfaces';
+import {
+  ILoggerModuleOptions,
+  ILoggerTransportsModuleOptions,
+} from '../../infrastructure/interfaces/logger.interfaces';
 import { LoggerAdapter } from './logger.adapter';
 import { WinstonConstants } from '../../infrastructure/adapters/winston/winston.constants';
 import { ConsoleTransport } from '../../infrastructure/adapters/winston/transports';
@@ -15,7 +23,41 @@ import { WinstonAdapter } from '../../infrastructure/adapters/winston';
 })
 export class LoggerModule {
 
-  // TODO: Add ForFeatureAsync method to change transports
+  public static forTransports(options: ILoggerTransportsModuleOptions): Provider {
+    const WinstonTransportsProvider: Provider = {
+      provide: WinstonConstants.winstonTransports,
+      useFactory: (opts: ILoggerModuleOptions) => {
+        const transports: unknown[] = [
+          ConsoleTransport.create(opts?.opts?.console),
+          ...options.transports,
+        ];
+
+        return transports;
+      },
+      inject: [LoggerConstants.options],
+    }
+
+    return WinstonTransportsProvider;
+  }
+
+  public static forTransportAsync(asyncOptions: ILoggerTransportsAsyncOptions): Provider {
+    const WinstonTransportsProvider: Provider = {
+      provide: WinstonConstants.winstonTransports,
+      useFactory: async (optionsFactory: ILoggerTransportsConfigFactory, opts: ILoggerModuleOptions) => {
+        const transportOpts  = await optionsFactory.createTransportsConfig()
+
+        const transports: unknown[] = [
+          ConsoleTransport.create(opts?.opts?.console),
+          ...transportOpts.transports,
+        ];
+
+        return transports;
+      },
+      inject: [asyncOptions.useExisting, LoggerConstants.options],
+    }
+
+    return WinstonTransportsProvider;
+  }
 
   public static forRoot(options: ILoggerModuleOptions): DynamicModule {
     const LoggerOptionsProvider: Provider = {
@@ -46,8 +88,7 @@ export class LoggerModule {
 
     const LoggerAdapterProvider: Provider = {
       provide: LoggerAdapter,
-      useFactory: (logger: ILoggerPort) => new LoggerAdapter(logger),
-      inject: [LoggerConstants.loggerBase],
+      useClass: LoggerAdapter,
     };
 
     return {
@@ -62,6 +103,7 @@ export class LoggerModule {
       exports: [
         LoggerAdapterProvider,
         LoggerServiceProvider,
+        LoggerOptionsProvider,
       ],
     };
   }
@@ -98,8 +140,7 @@ export class LoggerModule {
 
     const LoggerAdapterProvider: Provider = {
       provide: LoggerAdapter,
-      useFactory: (logger: ILoggerPort) => new LoggerAdapter(logger),
-      inject: [LoggerConstants.loggerBase],
+      useClass: LoggerAdapter,
     };
 
     return {
