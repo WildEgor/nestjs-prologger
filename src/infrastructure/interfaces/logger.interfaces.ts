@@ -18,6 +18,10 @@ export interface ILoggerModuleOptions {
   opts: ILoggerOptions;
 }
 
+export interface ILoggerTransportsModuleOptions {
+  transports: unknown[];
+}
+
 export enum LogLevels {
   Silent = 'silent',
   Debug = 'debug',

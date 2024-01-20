@@ -1,6 +1,7 @@
 import { ModuleMetadata } from '@nestjs/common/interfaces';
 import { NestApplication } from '@nestjs/core';
 import { Test } from '@nestjs/testing';
+import { LoggerAdapter } from '../modules/modules/logger/logger.adapter';
 // import { LoggerAdapter } from '../src/modules/logger/logger.adapter';
 
 export class FactoryTests {
@@ -24,8 +25,8 @@ export class FactoryTests {
     });
 
     // TODO: Fix this
-    // const logger = this._application.get<LoggerAdapter>(LoggerAdapter, { strict: false });
-    // this._application.useLogger(logger);
+    const logger = this._application.get<LoggerAdapter>(LoggerAdapter, { strict: false });
+    this._application.useLogger(logger);
 
     await this.application.listen(port);
   }
